@@ -14,6 +14,7 @@ public abstract class BasePanel : MonoBehaviour
     public bool isShow = false;
 
     //当隐藏完毕后 想要做的事情
+    private UnityAction hideCallBack = null;
 
     protected virtual void Awake()
     {
@@ -39,7 +40,7 @@ public abstract class BasePanel : MonoBehaviour
     /// <summary>
     /// 显示自己时的逻辑
     /// </summary>
-    public virtual void ShowPanel()
+    public virtual void ShowMe()
     {
         canvasGroup.alpha = 0;
         isShow = true;
@@ -48,10 +49,12 @@ public abstract class BasePanel : MonoBehaviour
     /// <summary>
     /// 隐藏自己时的逻辑
     /// </summary>
-    public virtual void HidePanel(UnityAction callBack)
+    public virtual void HideMe(UnityAction callBack)
     {
         canvasGroup.alpha = 1;
         isShow = false;
+
+        hideCallBack = callBack;
     }
 
 
@@ -71,7 +74,11 @@ public abstract class BasePanel : MonoBehaviour
         {
             canvasGroup.alpha -= alphaSpeed * Time.deltaTime;
             if (canvasGroup.alpha <= 0)
+            {
                 canvasGroup.alpha = 0;
+                //让面板 透明度淡出完成后 再去执行的一些逻辑
+                hideCallBack?.Invoke();
+            }
         }
     }
 }
