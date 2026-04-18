@@ -15,12 +15,20 @@ public class BeginPanel : BasePanel
     {
         btnStart.onClick.AddListener(() =>
         {
-            //之后会在这里 隐藏自己 显示选角面板
+            //播放摄像机 左转动画 然后 再显示选角面板
+            Camera.main.GetComponent<CameraAnimator>().TurnLeft(() =>
+            {
+                print("dddd");
+            });
+
+            //隐藏开始界面
+            UIManager.Instance.HidePanel<BeginPanel>();
         });
 
         btnSetting.onClick.AddListener(() =>
         {
             //之后会在这里 显示设置界面
+            UIManager.Instance.ShowPanel<SettingPanel>();
         });
 
         btnAbout.onClick.AddListener(() =>
