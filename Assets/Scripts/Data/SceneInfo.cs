@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 角色数据
+/// 场景数据结构类
 /// </summary>
-public class RoleInfo
+public class SceneInfo 
 {
     public int id;
-    public string res;
-    public int atk;
+    public string imgRes;
+    public string name;
+    public string sceneName;
     public string tips;
-    public int lockMoney;
-    public int type;
-    public string hitEff;
 }
-

@@ -10,6 +10,9 @@ public class GameDataMgr
     private static GameDataMgr instance = new GameDataMgr();
     public static GameDataMgr Instance => instance;
 
+    //记录选择的角色数据 用于之后在游戏场景中创建
+    public RoleInfo nowSelRole;
+
     //音效相关数据
     public MusicData musicData;
 
@@ -19,6 +22,9 @@ public class GameDataMgr
     //所有的角色数据
     public List<RoleInfo> roleInfoList = new List<RoleInfo>();
 
+    //场景数据
+    public List<SceneInfo> sceneInfoList = new List<SceneInfo>();
+
     private GameDataMgr()
     {
         //初始化一些默认数据
@@ -27,6 +33,9 @@ public class GameDataMgr
         playerData = JsonMgr.Instance.LoadData<PlayerData>("playerData");
         //读取角色数据    
         roleInfoList = JsonMgr.Instance.LoadData<List<RoleInfo>>("RoleInfo");
+        //读取场景数据
+        sceneInfoList = JsonMgr.Instance.LoadData<List<SceneInfo>>("SceneInfo");
+
     }
 
 
