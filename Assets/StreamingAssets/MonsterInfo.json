@@ -1,9 +1,9 @@
 [
-{"id":1,"res":"Monster/Z1","animator":"Animator/Monster/Aggressive","atk":2,"moveSpeed":100,"roundSpeed":100,"hp":10,"atkOffset":0.8},
-{"id":2,"res":"Monster/Z2","animator":"Animator/Monster/Broken","atk":3,"moveSpeed":50,"roundSpeed":110,"hp":10,"atkOffset":0.5},
-{"id":3,"res":"Monster/Z3","animator":"Animator/Monster/Calm","atk":4,"moveSpeed":60,"roundSpeed":120,"hp":10,"atkOffset":0.4},
-{"id":4,"res":"Monster/Z4","animator":"Animator/Monster/Crawl","atk":5,"moveSpeed":70,"roundSpeed":150,"hp":10,"atkOffset":1},
-{"id":5,"res":"Monster/Z5","animator":"Animator/Monster/Aggressive","atk":6,"moveSpeed":110,"roundSpeed":60,"hp":10,"atkOffset":0.9},
-{"id":6,"res":"Monster/Z6","animator":"Animator/Monster/Broken","atk":7,"moveSpeed":150,"roundSpeed":140,"hp":10,"atkOffset":0.88},
-{"id":7,"res":"Monster/Z7","animator":"Animator/Monster/Calm","atk":8,"moveSpeed":100,"roundSpeed":200,"hp":10,"atkOffset":0.6}
+{"id":1,"res":"Monster/Z1","animator":"Animator/Monster/Aggressive","atk":2,"moveSpeed":5,"roundSpeed":100,"hp":10,"atkOffset":0.8},
+{"id":2,"res":"Monster/Z2","animator":"Animator/Monster/Broken","atk":3,"moveSpeed":5,"roundSpeed":110,"hp":10,"atkOffset":0.5},
+{"id":3,"res":"Monster/Z3","animator":"Animator/Monster/Calm","atk":4,"moveSpeed":5,"roundSpeed":120,"hp":10,"atkOffset":0.4},
+{"id":4,"res":"Monster/Z4","animator":"Animator/Monster/Crawl","atk":5,"moveSpeed":5,"roundSpeed":150,"hp":10,"atkOffset":1},
+{"id":5,"res":"Monster/Z5","animator":"Animator/Monster/Aggressive","atk":6,"moveSpeed":5,"roundSpeed":60,"hp":20,"atkOffset":0.9},
+{"id":6,"res":"Monster/Z6","animator":"Animator/Monster/Broken","atk":7,"moveSpeed":5,"roundSpeed":140,"hp":20,"atkOffset":0.88},
+{"id":7,"res":"Monster/Z7","animator":"Animator/Monster/Calm","atk":8,"moveSpeed":5,"roundSpeed":200,"hp":20,"atkOffset":0.6}
 ]

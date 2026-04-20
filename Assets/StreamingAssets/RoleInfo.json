@@ -1,8 +1,8 @@
 [
-{"id":1,"res":"Role/1","atk":1,"tips":"角色1","lockMoney":0,"type":1,"hitEff":"Eff/1"},
-{"id":2,"res":"Role/2","atk":2,"tips":"角色2","lockMoney":0,"type":2,"hitEff":"Eff/2"},
-{"id":3,"res":"Role/3","atk":3,"tips":"角色3","lockMoney":200,"type":2,"hitEff":"Eff/3"},
-{"id":4,"res":"Role/4","atk":4,"tips":"角色4","lockMoney":300,"type":1,"hitEff":"Eff/4"},
-{"id":5,"res":"Role/5","atk":5,"tips":"角色5","lockMoney":400,"type":2,"hitEff":"Eff/5"},
-{"id":6,"res":"Role/6","atk":6,"tips":"角色6","lockMoney":700,"type":2,"hitEff":"Eff/6"}
+{"id":1,"res":"Role/1","atk":3,"tips":"角色1","lockMoney":0,"type":1,"hitEff":"Eff/1"},
+{"id":2,"res":"Role/2","atk":3,"tips":"角色2","lockMoney":0,"type":2,"hitEff":"Eff/2"},
+{"id":3,"res":"Role/3","atk":5,"tips":"角色3","lockMoney":200,"type":2,"hitEff":"Eff/3"},
+{"id":4,"res":"Role/4","atk":7,"tips":"角色4","lockMoney":300,"type":1,"hitEff":"Eff/4"},
+{"id":5,"res":"Role/5","atk":6,"tips":"角色5","lockMoney":400,"type":2,"hitEff":"Eff/5"},
+{"id":6,"res":"Role/6","atk":8,"tips":"角色6","lockMoney":700,"type":2,"hitEff":"Eff/6"}
 ]

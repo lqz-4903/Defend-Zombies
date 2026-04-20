@@ -32,12 +32,73 @@ public class MonsterPoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("CreateWave", firstDelayTime);
+
+        //记录出怪点
+        GameLeveMgr.Instance.AddMonsterPoint(this);
+        //更新最大波数
+        GameLeveMgr.Instance.UpdateMaxNum(maxWave);
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// 开始创建一波的怪物
+    /// </summary>
+    private void CreateWave()
     {
-        
+        //得到当前波怪物的ID
+        nowID = monsterIDs[Random.Range(0, monsterIDs.Count)];
+        //当前波怪物有多少只
+        nowNum = monsterNumOnewave;
+        //创建怪物
+        CreateMonster();
+        //减少波数
+        --maxWave;
+        //通知关卡管理器 出了一波怪
+        GameLeveMgr.Instance.ChangeNowWavenum(1);
+
     }
+
+    /// <summary>
+    /// 创建怪物
+    /// </summary>
+    private void CreateMonster()
+    {
+        //直接创建怪物
+        //取出怪物数据 
+        MonsterInfo info = GameDataMgr.Instance.monsterInfosList[nowID - 1];
+
+        //创建怪物预设体
+        GameObject obj = Instantiate(Resources.Load<GameObject>(info.res), transform.position, Quaternion.identity);
+        //为创建出来的怪物预设体 添加怪物脚本 进行初始化
+        MonsterObject monsterObj = obj.AddComponent<MonsterObject>();
+        monsterObj.InitInfo(info);
+
+        //告诉管理器 怪物数量加一
+        GameLeveMgr.Instance.ChangeMonsterNum(1);
+
+        //创建完一只 总数减一
+        --nowNum;
+        if (nowNum == 0)
+        {
+            if (maxWave > 0)
+            {
+                Invoke("CreateWave", delayTime);
+            }
+        }
+
+        else
+        {
+            Invoke("CreateMonster", createOffsetTime);
+        }
+    }
+
+    /// <summary>
+    /// 出怪点是否出怪结束
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckOver()
+    {
+        return nowNum == 0 && maxWave == 0;
+    }
+
 }

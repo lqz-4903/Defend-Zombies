@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerObject : MonoBehaviour
 {
@@ -20,6 +21,16 @@ public class PlayerObject : MonoBehaviour
     //持枪对象才有的开火点
     public Transform gunPoint;
 
+    //记录角色信息
+    private List<RoleInfo> roleInfos = GameDataMgr.Instance.roleInfoList;
+    //记录是不是持枪角色
+    private bool gunRole;
+    //射线
+    private LineRenderer line;
+    //射线起点
+    private Vector3 startPos;
+    //射线终点
+    private Vector3 endPos;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +40,9 @@ public class PlayerObject : MonoBehaviour
         cameraMove.SetTarget(this.transform);
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        if (line != null)
+            DrawRay();
     }
 
     // Update is called once per frame
@@ -63,6 +77,16 @@ public class PlayerObject : MonoBehaviour
         if (Input.GetMouseButton(0))
             animator.SetTrigger("Fire");
 
+        if (gunRole)
+        {
+            startPos = gunPoint.position;
+            endPos = gunPoint.position + gunPoint.forward * 100f;
+
+            line.SetPosition(0, startPos);
+            line.SetPosition(1, endPos);
+        }
+            
+
     }
 
     /// <summary>
@@ -93,6 +117,12 @@ public class PlayerObject : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             //得到碰到撞到的对象上的怪物脚本 让其受伤
+            MonsterObject monster = colliders[i].gameObject.GetComponent<MonsterObject>();
+            if (monster != null)
+            {
+                monster.Wound(this.atk);
+                break;
+            }
         }
     }
 
@@ -100,13 +130,19 @@ public class PlayerObject : MonoBehaviour
     public void ShootEvent()
     {
         //进行射线检测
-        //前提是需要开户点
+        //前提是需要开火点
         RaycastHit[] hits = Physics.RaycastAll(new Ray(gunPoint.position, gunPoint.forward), 1000,
                                                 1 << LayerMask.NameToLayer("Monster"));
 
         for (int i = 0; i < hits.Length; i++)
         {
             //得到对象上的怪物脚本 让其受伤
+            MonsterObject monster = hits[i].collider.gameObject.GetComponent<MonsterObject>();
+            if (monster != null)
+            {
+                monster.Wound(this.atk);
+                break;
+            }
         }
     }
 
@@ -127,5 +163,26 @@ public class PlayerObject : MonoBehaviour
         //加钱
         this.money += money;
         UpdateMoney();
+    }
+
+    public void DrawRay()
+    {
+        for (int i = 0; i < roleInfos.Count; i++)
+        {
+            if (roleInfos[i].type == 2)
+            {
+                gunRole = true;
+                line = this.gameObject.AddComponent<LineRenderer>();
+                line.positionCount = 2;
+                line.startWidth = 0.05f;
+                line.endWidth = 0.05f;
+
+                line.startColor = Color.red;
+                line.endColor = Color.red;
+                
+            }
+            else
+                gunRole = false;            
+        }
     }
 }
