@@ -35,9 +35,9 @@ public class MonsterPoint : MonoBehaviour
         Invoke("CreateWave", firstDelayTime);
 
         //记录出怪点
-        GameLeveMgr.Instance.AddMonsterPoint(this);
+        GameLevelMgr.Instance.AddMonsterPoint(this);
         //更新最大波数
-        GameLeveMgr.Instance.UpdateMaxNum(maxWave);
+        GameLevelMgr.Instance.UpdateMaxNum(maxWave);
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class MonsterPoint : MonoBehaviour
         //减少波数
         --maxWave;
         //通知关卡管理器 出了一波怪
-        GameLeveMgr.Instance.ChangeNowWavenum(1);
+        GameLevelMgr.Instance.ChangeNowWavenum(1);
 
     }
 
@@ -74,7 +74,9 @@ public class MonsterPoint : MonoBehaviour
         monsterObj.InitInfo(info);
 
         //告诉管理器 怪物数量加一
-        GameLeveMgr.Instance.ChangeMonsterNum(1);
+        //GameLeveMgr.Instance.ChangeMonsterNum(1);
+        //记录怪物到怪物列表中
+        GameLevelMgr.Instance.AddMonster(monsterObj);
 
         //创建完一只 总数减一
         --nowNum;

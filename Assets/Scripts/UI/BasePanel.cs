@@ -11,7 +11,7 @@ public abstract class BasePanel : MonoBehaviour
     private float alphaSpeed = 10;
 
     //当前是隐藏还是显示
-    public bool isShow = false;
+    private bool isShow = false;
 
     //当隐藏完毕后 想要做的事情
     private UnityAction hideCallBack = null;
@@ -59,7 +59,7 @@ public abstract class BasePanel : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         //当处于显示状态时 如果透明度 不为1 就会不停地加到1 加到1 过后就停止变化了
         //淡入

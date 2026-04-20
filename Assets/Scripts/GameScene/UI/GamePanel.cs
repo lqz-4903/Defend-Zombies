@@ -23,6 +23,9 @@ public class GamePanel : BasePanel
     //管理 3个复合界面
     public List<TowerBtn> towerBtns = new List<TowerBtn>();
 
+    //当前进入和选中的造塔点
+    private TowerPoint nowSelTowerPoint;
+
     public override void Init()
     {
         btnQuit.onClick.AddListener(() =>
@@ -67,5 +70,53 @@ public class GamePanel : BasePanel
     public void UpdateMoney(int money)
     {
         txtMoney.text = money.ToString();
+    }
+
+    /// <summary>
+    /// 更新当前选中造塔点 界面的一些变化
+    /// </summary>
+    /// <param name="point"></param>
+    public void UpdateSelTower(TowerPoint point)
+    {
+        //根据造塔点的信息 决定 界面上的显示内容
+        nowSelTowerPoint = point;
+
+        //如果传入数据为空
+        if (nowSelTowerPoint == null)
+        {
+            //隐藏下方造塔按钮
+            botTrans.gameObject.SetActive(false);
+        }
+        else
+        {
+            //显示下方造塔按钮
+            botTrans.gameObject.SetActive(true);
+
+            //如果没有造过塔
+            if (nowSelTowerPoint.nowTowerInfo == null)
+            {
+                for (int i = 0; i < towerBtns.Count; i++)
+                {
+                    towerBtns[i].gameObject.SetActive(true);
+                    towerBtns[i].InitInfo(nowSelTowerPoint.chooseIDs[i], "数字键" + (i + 1));
+                }
+            }
+            //如果造过塔
+            else
+            {
+                for (int i = 0; i < towerBtns.Count; i++)
+                {
+                    towerBtns[i].gameObject.SetActive(false);
+                }
+                towerBtns[1].gameObject.SetActive(true);
+                towerBtns[1].InitInfo(nowSelTowerPoint.nowTowerInfo.nextLev, "空格键");
+            }
+        }        
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        //主要用于造塔点 键盘输入 造塔
     }
 }

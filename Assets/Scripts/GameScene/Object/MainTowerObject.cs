@@ -42,7 +42,15 @@ public class MainTowerObject : MonoBehaviour
         {
             hp = 0;
             isDead = true;
+
+            //显示鼠标
+            Cursor.lockState = CursorLockMode.None;
             //游戏结束
+            GameOverPanel panel = UIManager.Instance.ShowPanel<GameOverPanel>();
+            //得到奖励的一半
+            panel.InitInfo((int)(GameLevelMgr.Instance.player.money * 0.5f), false);
+
+
         }
         //更新血量
         UpdateHP(hp, maxHP);

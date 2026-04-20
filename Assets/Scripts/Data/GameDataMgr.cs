@@ -28,6 +28,9 @@ public class GameDataMgr
     //所有的怪物数据
     public List<MonsterInfo> monsterInfosList;
 
+    //所有塔的数据
+    public List<TowerInfo> towerInfoList;
+
     private GameDataMgr()
     {
         //初始化一些默认数据
@@ -38,9 +41,10 @@ public class GameDataMgr
         roleInfoList = JsonMgr.Instance.LoadData<List<RoleInfo>>("RoleInfo");
         //读取场景数据
         sceneInfoList = JsonMgr.Instance.LoadData<List<SceneInfo>>("SceneInfo");
-        //读取怪物数据
-        
+        //读取怪物数据        
         monsterInfosList = JsonMgr.Instance.LoadData < List<MonsterInfo>>("MonsterInfo");
+        //读取塔的数据
+        towerInfoList = JsonMgr.Instance.LoadData<List<TowerInfo>>("TowerInfo");
     }
 
 
@@ -59,4 +63,21 @@ public class GameDataMgr
     {
         JsonMgr.Instance.SaveData(playerData, "PlayerData");
     }
+
+    /// <summary>
+    /// 播放音效方法
+    /// </summary>
+    /// <param name="resName"></param>
+    public void PlaySound(string resName)
+    {
+        GameObject musicObj = new GameObject();
+        AudioSource a = musicObj.AddComponent<AudioSource>();
+        a.clip = Resources.Load<AudioClip>(resName);
+        a.volume = musicData.soundValue;
+        a.mute = !musicData.soundOpen;
+        a.Play();
+
+        GameObject.Destroy(musicObj, 1);         
+    }
+
 }

@@ -22,7 +22,7 @@ public class PlayerObject : MonoBehaviour
     public Transform gunPoint;
 
     //记录角色信息
-    private List<RoleInfo> roleInfos = GameDataMgr.Instance.roleInfoList;
+    private RoleInfo role;
     //记录是不是持枪角色
     private bool gunRole;
     //射线
@@ -31,6 +31,11 @@ public class PlayerObject : MonoBehaviour
     private Vector3 startPos;
     //射线终点
     private Vector3 endPos;
+
+    private void Awake()
+    {
+        role = GameDataMgr.Instance.nowSelRole;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +46,10 @@ public class PlayerObject : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
 
-        if (line != null)
-            DrawRay();
+        if (role == null)
+            return;
+        DrawRay();
+
     }
 
     // Update is called once per frame
@@ -80,13 +87,11 @@ public class PlayerObject : MonoBehaviour
         if (gunRole)
         {
             startPos = gunPoint.position;
-            endPos = gunPoint.position + gunPoint.forward * 100f;
+            endPos = gunPoint.position + transform.forward * 100f;
 
             line.SetPosition(0, startPos);
             line.SetPosition(1, endPos);
-        }
-            
-
+        }           
     }
 
     /// <summary>
@@ -112,8 +117,9 @@ public class PlayerObject : MonoBehaviour
         //进行伤害检测
         Collider[] colliders = Physics.OverlapSphere(this.transform.position + this.transform.forward + this.transform.up, 1,
                                                      1 << LayerMask.NameToLayer("Monster"));
+        //播放音效
+        GameDataMgr.Instance.PlaySound("Music/Knife");        
 
-        
         for (int i = 0; i < colliders.Length; i++)
         {
             //得到碰到撞到的对象上的怪物脚本 让其受伤
@@ -133,6 +139,8 @@ public class PlayerObject : MonoBehaviour
         //前提是需要开火点
         RaycastHit[] hits = Physics.RaycastAll(new Ray(gunPoint.position, gunPoint.forward), 1000,
                                                 1 << LayerMask.NameToLayer("Monster"));
+        //播放音效
+        GameDataMgr.Instance.PlaySound("Music/Gun");
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -140,6 +148,12 @@ public class PlayerObject : MonoBehaviour
             MonsterObject monster = hits[i].collider.gameObject.GetComponent<MonsterObject>();
             if (monster != null)
             {
+                //进行打击特效的创建
+                GameObject effObj = Instantiate(Resources.Load<GameObject>(GameDataMgr.Instance.nowSelRole.hitEff));
+                effObj.transform.position = hits[i].point;
+                effObj.transform.rotation = Quaternion.LookRotation(hits[i].normal);
+                Destroy(effObj, 1f);
+
                 monster.Wound(this.atk);
                 break;
             }
@@ -166,12 +180,12 @@ public class PlayerObject : MonoBehaviour
     }
 
     public void DrawRay()
-    {
-        for (int i = 0; i < roleInfos.Count; i++)
+    { 
+        if (role.type == 2)
         {
-            if (roleInfos[i].type == 2)
+            gunRole = true;
+            if (line == null)
             {
-                gunRole = true;
                 line = this.gameObject.AddComponent<LineRenderer>();
                 line.positionCount = 2;
                 line.startWidth = 0.05f;
@@ -179,10 +193,9 @@ public class PlayerObject : MonoBehaviour
 
                 line.startColor = Color.red;
                 line.endColor = Color.red;
-                
-            }
-            else
-                gunRole = false;            
+            }            
         }
+        else
+            gunRole = false;
     }
 }

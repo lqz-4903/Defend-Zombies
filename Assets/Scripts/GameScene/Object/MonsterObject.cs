@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.WSA;
+
 
 public class MonsterObject : MonoBehaviour
 {
@@ -59,6 +59,7 @@ public class MonsterObject : MonoBehaviour
         else
         {
             //播放音效
+            GameDataMgr.Instance.PlaySound("Music/Wound");
         }
     }
 
@@ -70,7 +71,8 @@ public class MonsterObject : MonoBehaviour
         agent.isStopped = true;
         //播放死亡动画
         animator.SetBool("Dead", true);
-
+        //播放音效
+        GameDataMgr.Instance.PlaySound("Music/dead");
 
         //加钱—之后通过关卡管理类 来管理游戏中的对象 通过它来让玩家加钱
     }
@@ -80,11 +82,22 @@ public class MonsterObject : MonoBehaviour
     {
         //死亡动画播放完毕后移除对象
         //之后有了关卡管理器再写
-        GameLeveMgr.Instance.ChangeMonsterNum(-1);
+        //GameLeveMgr.Instance.ChangeMonsterNum(-1);
+
+        //从列表中移除怪物
+        GameLevelMgr.Instance.RemoveMonster(this);
+
         Destroy(this.gameObject, 2f);
 
-        //怪物死亡时 检测 游戏是否胜利
-        GameLeveMgr.Instance.CheckOver();
+        //怪物死亡时 检测 游戏是否胜利        
+        if(GameLevelMgr.Instance.CheckOver())
+        {
+            //显示鼠标
+            Cursor.lockState = CursorLockMode.None;
+            //显示结束界面
+            GameOverPanel panel = UIManager.Instance.ShowPanel<GameOverPanel>();
+            panel.InitInfo((int)(GameLevelMgr.Instance.player.money), true);
+        }
 
     }
 
@@ -125,6 +138,8 @@ public class MonsterObject : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(this.transform.position + transform.forward + transform.up,
                               2,
                               1 << LayerMask.NameToLayer("MainTower"));
+        //播放音效
+        GameDataMgr.Instance.PlaySound("Music/Eat");
 
         for (int i = 0; i < colliders.Length; i++)
         {

@@ -49,7 +49,7 @@ public class ChooseScenePanel : BasePanel
             //进行关卡初始化
             ao.completed += (obj) =>
             {
-                GameLeveMgr.Instance.InitInfo(nowSceneData);
+                GameLevelMgr.Instance.InitInfo(nowSceneData);
             };
 
         });
