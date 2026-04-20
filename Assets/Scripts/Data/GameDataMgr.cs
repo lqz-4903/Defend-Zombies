@@ -25,6 +25,9 @@ public class GameDataMgr
     //场景数据
     public List<SceneInfo> sceneInfoList = new List<SceneInfo>();
 
+    //所有的怪物数据
+    public List<MonsterInfo> monsterInfosList;
+
     private GameDataMgr()
     {
         //初始化一些默认数据
@@ -35,7 +38,9 @@ public class GameDataMgr
         roleInfoList = JsonMgr.Instance.LoadData<List<RoleInfo>>("RoleInfo");
         //读取场景数据
         sceneInfoList = JsonMgr.Instance.LoadData<List<SceneInfo>>("SceneInfo");
-
+        //读取怪物数据
+        
+        monsterInfosList = JsonMgr.Instance.LoadData < List<MonsterInfo>>("MonsterInfo");
     }
 
 
