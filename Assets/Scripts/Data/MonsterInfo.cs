@@ -8,7 +8,7 @@ public class MonsterInfo
     public string res;
     public string animator;
     public int atk;
-    public int moveSpeed;
+    public float moveSpeed;
     public int roundSpeed;
     public int hp;
     public float atkOffset;

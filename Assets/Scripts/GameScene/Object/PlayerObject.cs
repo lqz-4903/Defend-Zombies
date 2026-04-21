@@ -13,7 +13,7 @@ public class PlayerObject : MonoBehaviour
     //玩家拥有的钱
     public int money;
     //旋转的速度
-    private float roundSpeed = 50;
+    private float roundSpeed = 100;
 
     //跟随的摄像机
     private CameraMove cameraMove;
@@ -91,7 +91,10 @@ public class PlayerObject : MonoBehaviour
 
             line.SetPosition(0, startPos);
             line.SetPosition(1, endPos);
-        }           
+        }
+
+        if (Input.GetKey(KeyCode.LeftAlt))
+            Cursor.lockState = CursorLockMode.None;
     }
 
     /// <summary>
@@ -124,7 +127,7 @@ public class PlayerObject : MonoBehaviour
         {
             //得到碰到撞到的对象上的怪物脚本 让其受伤
             MonsterObject monster = colliders[i].gameObject.GetComponent<MonsterObject>();
-            if (monster != null)
+            if (monster != null && !monster.isDead)
             {
                 monster.Wound(this.atk);
                 break;
@@ -137,7 +140,7 @@ public class PlayerObject : MonoBehaviour
     {
         //进行射线检测
         //前提是需要开火点
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(gunPoint.position, gunPoint.forward), 1000,
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(gunPoint.position, this.transform.forward), 1000,
                                                 1 << LayerMask.NameToLayer("Monster"));
         //播放音效
         GameDataMgr.Instance.PlaySound("Music/Gun");
@@ -146,7 +149,7 @@ public class PlayerObject : MonoBehaviour
         {
             //得到对象上的怪物脚本 让其受伤
             MonsterObject monster = hits[i].collider.gameObject.GetComponent<MonsterObject>();
-            if (monster != null)
+            if (monster != null && !monster.isDead)
             {
                 //进行打击特效的创建
                 GameObject effObj = Instantiate(Resources.Load<GameObject>(GameDataMgr.Instance.nowSelRole.hitEff));

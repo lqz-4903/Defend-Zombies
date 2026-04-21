@@ -46,6 +46,9 @@ public class MonsterObject : MonoBehaviour
     //受伤
     public void Wound(int dmg)
     {
+        if (isDead)
+            return;
+
         //减少血量
         hp -= dmg;
         //播放受伤动画
@@ -68,13 +71,15 @@ public class MonsterObject : MonoBehaviour
     {
         isDead = true;
         //停止移动
-        agent.isStopped = true;
+        //agent.isStopped = true;
+        agent.enabled = false;
         //播放死亡动画
         animator.SetBool("Dead", true);
         //播放音效
         GameDataMgr.Instance.PlaySound("Music/dead");
 
         //加钱—之后通过关卡管理类 来管理游戏中的对象 通过它来让玩家加钱
+        GameLevelMgr.Instance.player.AddMoney(10);
     }
 
     //死亡动画播放完毕后 会调用的事件方法

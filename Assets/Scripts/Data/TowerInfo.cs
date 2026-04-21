@@ -8,7 +8,7 @@ public class TowerInfo
     public string name;
     public int money;
     public int atk;
-    public int atkRange;
+    public float atkRange;
     public float offsetTime;
     public int nextLev;
     public string imgRes;

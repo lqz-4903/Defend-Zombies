@@ -10,7 +10,7 @@ public class TowerObject : MonoBehaviour
     //开火点 用于释放攻击特效的位置
     public Transform gunPoint;
     //炮台头部旋转速度
-    private float roundSpeed = 20;
+    private float roundSpeed = 10;
 
     //炮台关联的数据
     private TowerInfo info;

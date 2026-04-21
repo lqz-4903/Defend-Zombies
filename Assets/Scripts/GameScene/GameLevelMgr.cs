@@ -120,12 +120,12 @@ public class GameLevelMgr
     /// <param name="pos"></param>
     /// <param name="range"></param>
     /// <returns></returns>
-    public MonsterObject FindMonster(Vector3 pos, int range)
+    public MonsterObject FindMonster(Vector3 pos, float range)
     {
         //在怪物列表中 满足距离条件的怪物 返回出去 用于 塔攻击
         for (int i = 0; i < monsterList.Count; i++)
         {
-            if (!monsterList[i].isDead || Vector3.Distance(pos, monsterList[i].transform.position) < range)
+            if (!monsterList[i].isDead && Vector3.Distance(pos, monsterList[i].transform.position) < range)
             {
                 return monsterList[i];
             }
@@ -139,13 +139,13 @@ public class GameLevelMgr
     /// <param name="pos"></param>
     /// <param name="range"></param>
     /// <returns></returns>
-    public List<MonsterObject> FindMonsters(Vector3 pos, int range)
+    public List<MonsterObject> FindMonsters(Vector3 pos, float range)
     {
         //去寻找满足距离条件的所有怪物 并且把他们记录在一个列表中
         List<MonsterObject> list = new List<MonsterObject>();
         for (int i = 0; i < monsterList.Count; i++)
         {
-            if (!monsterList[i].isDead || Vector3.Distance(pos, monsterList[i].transform.position) < range)
+            if (!monsterList[i].isDead && Vector3.Distance(pos, monsterList[i].transform.position) < range)
             {
                 list.Add(monsterList[i]);
             }

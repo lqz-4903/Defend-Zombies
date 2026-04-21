@@ -26,6 +26,9 @@ public class GamePanel : BasePanel
     //当前进入和选中的造塔点
     private TowerPoint nowSelTowerPoint;
 
+    //用来标识 是否检测 造塔输入的
+    private bool checkInput;
+
     public override void Init()
     {
         btnQuit.onClick.AddListener(() =>
@@ -35,6 +38,7 @@ public class GamePanel : BasePanel
             //返回到开始界面
             SceneManager.LoadScene("BeginScene");
             //其他
+            
         });
 
         //一开始隐藏下方和造塔相关的UI
@@ -84,11 +88,15 @@ public class GamePanel : BasePanel
         //如果传入数据为空
         if (nowSelTowerPoint == null)
         {
+            checkInput = false;
+
             //隐藏下方造塔按钮
             botTrans.gameObject.SetActive(false);
         }
         else
         {
+            checkInput = true;
+
             //显示下方造塔按钮
             botTrans.gameObject.SetActive(true);
 
@@ -118,5 +126,35 @@ public class GamePanel : BasePanel
     {
         base.Update();
         //主要用于造塔点 键盘输入 造塔
+        if (!checkInput)
+            return;
+
+        //如果造过塔 那么就检测1 2 3 按钮去造塔
+        if (nowSelTowerPoint.nowTowerInfo == null)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                nowSelTowerPoint.createTower(nowSelTowerPoint.chooseIDs[0]);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                nowSelTowerPoint.createTower(nowSelTowerPoint.chooseIDs[1]);
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                nowSelTowerPoint.createTower(nowSelTowerPoint.chooseIDs[2]);
+
+            }
+        }
+        //造过塔 就检测空格键 去建造
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                nowSelTowerPoint.createTower(nowSelTowerPoint.nowTowerInfo.nextLev);
+            }
+        }
+
     }
 }
