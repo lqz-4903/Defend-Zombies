@@ -265,7 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgPic: {fileID: 3121747062032424620}
   txtTip: {fileID: 4602504915723158163}
-  txtMoney: {fileID: 0}
+  txtMoney: {fileID: 8300458164524503385}
 --- !u!1 &2302183932260351051
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgPic: {fileID: 5385715171195898868}
   txtTip: {fileID: 373782411162994393}
-  txtMoney: {fileID: 0}
+  txtMoney: {fileID: 1108435181022972888}
 --- !u!1 &4115441991851561026
 GameObject:
   m_ObjectHideFlags: 0
